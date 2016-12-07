@@ -22,17 +22,8 @@
 
 	    <!-- Тело таблицы -->
 	    <tbody>
-		@foreach ($tasks as $task)
-		<tr>
-		    <!-- Имя задачи -->
-		    <td class="table-text">
-			<div>{{ $task->name }}</div>
-		    </td>
-			<td class="table-text">
-			<div>{{ $task->created_at }}</div>
-		    </td>		    
-		</tr>
-		@endforeach
+		@var_dump($tasks)
+		
 	    </tbody>
         </table>
     </div>

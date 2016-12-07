@@ -4,6 +4,31 @@ use App\Task;
 use Illuminate\Http\Request;
 
 /**
+ * Вывод определенной список всех задач
+ */
+
+Route::get('/last/{id}', function ($id) {
+  //$tasks = Task::findOrFail($id)->get();
+  $tasks = DB::table('tasks')->where('id', $id)->first();
+
+  return view('tasks_by_id', [
+	'tasks' => $tasks
+    ]);
+});
+
+/**
+ * Админка
+ */
+Route::get('/admin', function () {
+    $tasks = Task::orderBy('created_at', 'asc')->get();
+
+    return view('admin', [
+	'tasks' => $tasks
+    ]);
+});
+
+
+/**
  * Вывести список всех задач
  */
 Route::get('/', function () {
@@ -24,7 +49,7 @@ Route::post('/task', function (Request $request) {
   ]);
 
   if ($validator->fails()) {
-    return redirect('/')
+    return redirect('/admin')
       ->withInput()
       ->withErrors($validator);
   }
@@ -34,7 +59,7 @@ Route::post('/task', function (Request $request) {
   $task->description = $request->description;
   $task->save();
 
-  return redirect('/');
+  return redirect('/admin');
 });
 
 /**
